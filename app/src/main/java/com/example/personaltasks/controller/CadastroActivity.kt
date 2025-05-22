@@ -41,4 +41,17 @@ class CadastroActivity : AppCompatActivity() {
         }
     }
 
+    private fun salvarTarefa() {
+        val titulo = binding.etTitulo.text.toString()
+        val descricao = binding.etDescricao.text.toString()
+        val dataLimite = dataSelecionada ?: LocalDate.now()
+
+        val tarefa = Tarefa(
+            titulo = titulo,
+            descricao = descricao,
+            dataLimite = dataLimite
+        )
+
+        finish()
+    }
 }
