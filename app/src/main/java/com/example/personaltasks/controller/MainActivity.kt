@@ -1,4 +1,4 @@
-package com.example.personaltasks
+package com.example.personaltasks.controller
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
