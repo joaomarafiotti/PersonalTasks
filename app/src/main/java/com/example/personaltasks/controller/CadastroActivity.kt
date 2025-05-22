@@ -19,6 +19,8 @@ class CadastroActivity : AppCompatActivity() {
         // Inicializa o ViewBinding
         binding = ActivityCadastroBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        configurarDatePicker()
     }
 
     private fun configurarDatePicker() {
