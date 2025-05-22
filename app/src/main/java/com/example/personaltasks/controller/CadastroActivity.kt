@@ -21,8 +21,19 @@ class CadastroActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         configurarDatePicker()
+
+        binding.btnSalvar.setOnClickListener {
+            salvarTarefa()
+        }
+
+        binding.btnCancelar.setOnClickListener {
+            finish()
+        }
     }
 
+    /**
+     * Configura o DatePicker para selecionar a data limite.
+     */
     private fun configurarDatePicker() {
         binding.etDataLimite.setOnClickListener {
             val calendario = Calendar.getInstance()
@@ -41,6 +52,9 @@ class CadastroActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Cria e retorna uma Tarefa com os dados preenchidos.
+     */
     private fun salvarTarefa() {
         val titulo = binding.etTitulo.text.toString()
         val descricao = binding.etDescricao.text.toString()
@@ -52,6 +66,8 @@ class CadastroActivity : AppCompatActivity() {
             dataLimite = dataLimite
         )
 
+        // Futuramente pode passar a Tarefa de volta via Intent ou salvar no banco
+        // Por enquanto só finaliza
         finish()
     }
 }
