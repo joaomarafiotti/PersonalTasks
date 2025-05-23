@@ -1,9 +1,22 @@
 <resources>
     <string name="app_name">PersonalTasks</string>
-    <string name="data_limite">Data limite</string>
-    <string name="descricao">Descrição</string>
+
+    <!-- Labels -->
     <string name="titulo">Título</string>
+    <string name="descricao">Descrição</string>
+    <string name="data_limite">Data Limite</string>
+
+    <!-- Botões -->
     <string name="salvar">Salvar</string>
     <string name="cancelar">Cancelar</string>
-    <string name="nenhuma_tarefa_cadastrada">Nenhuma tarefa cadastrada</string>
+
+    <!-- Menus -->
+    <string name="nova_tarefa">Nova Tarefa</string>
+    <string name="editar">Editar</string>
+    <string name="excluir">Excluir</string>
+    <string name="detalhes">Detalhes</string>
+
+    <!-- Toasts e mensagens -->
+    <string name="detalhes_tarefa">Detalhes da Tarefa</string>
+    <string name="erro_tarefa">Erro ao processar a tarefa</string>
 </resources>
