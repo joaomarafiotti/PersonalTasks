@@ -22,6 +22,9 @@ class CadastroActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         repository = TarefaRepository(this)
 
+        binding = ActivityCadastroBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
         tarefa = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
             intent.getParcelableExtra("tarefa", Tarefa::class.java)
         } else {
@@ -35,10 +38,6 @@ class CadastroActivity : AppCompatActivity() {
             binding.etDataLimite.setText(it.dataLimite.toString())
             dataSelecionada = it.dataLimite
         }
-
-        // Inicializa o ViewBinding
-        binding = ActivityCadastroBinding.inflate(layoutInflater)
-        setContentView(binding.root)
 
         configurarDatePicker()
 
