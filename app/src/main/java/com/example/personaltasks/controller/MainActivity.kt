@@ -2,7 +2,6 @@ package com.example.personaltasks.controller
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.ContextMenu
 import android.view.Menu
 import android.view.MenuItem
@@ -21,22 +20,23 @@ import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var toolbar: Toolbar
+    private lateinit var mensagemVazio: TextView
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: TarefaAdapter
     private lateinit var repository: TarefaRepository
     private var selectedPosition: Int = -1
-    private lateinit var mensagemVazio: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
-        mensagemVazio = findViewById(R.id.tvMensagemVazio)
-
+        mensagemVazio = findViewById(R.id.mensagemVazio)
         recyclerView = findViewById(R.id.rvTarefas)
+
         adapter = TarefaAdapter(listOf()) { pos ->
             selectedPosition = pos
         }
@@ -44,7 +44,8 @@ class MainActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         repository = TarefaRepository(this)
-        carregarTarefas()  // depois carrega as tarefas reais
+
+        carregarTarefas()
 
         registerForContextMenu(recyclerView)
     }
@@ -52,8 +53,13 @@ class MainActivity : AppCompatActivity() {
     private fun carregarTarefas() {
         lifecycleScope.launch {
             val tarefas = repository.getAll()
-            Log.d("DEBUG", "Tarefas carregadas: ${tarefas.size}")
             adapter.atualizarLista(tarefas)
+
+            if (tarefas.isEmpty()) {
+                mensagemVazio.visibility = View.VISIBLE
+            } else {
+                mensagemVazio.visibility = View.GONE
+            }
         }
     }
 
