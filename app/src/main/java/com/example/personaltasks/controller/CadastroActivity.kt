@@ -3,8 +3,11 @@ package com.example.personaltasks.controller
 import android.app.DatePickerDialog
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.example.personaltasks.databinding.ActivityCadastroBinding
 import com.example.personaltasks.model.Tarefa
+import com.example.personaltasks.repository.TarefaRepository
+import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -12,9 +15,11 @@ import java.util.*
 class CadastroActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCadastroBinding
     private var dataSelecionada: LocalDate? = null
+    private lateinit var repository: TarefaRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        repository = TarefaRepository(this)
 
         // Inicializa o ViewBinding
         binding = ActivityCadastroBinding.inflate(layoutInflater)
@@ -66,8 +71,9 @@ class CadastroActivity : AppCompatActivity() {
             dataLimite = dataLimite
         )
 
-        // Futuramente pode passar a Tarefa de volta via Intent ou salvar no banco
-        // Por enquanto só finaliza
-        finish()
+        lifecycleScope.launch {
+            repository.insert(tarefa)
+            finish()
+        }
     }
 }
