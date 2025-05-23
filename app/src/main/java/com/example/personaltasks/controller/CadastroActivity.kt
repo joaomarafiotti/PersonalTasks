@@ -21,13 +21,11 @@ class CadastroActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Inicializa ViewBinding primeiro!
         binding = ActivityCadastroBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         repository = TarefaRepository(this)
 
-        // Recupera Tarefa se vier da edição
         tarefa = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
             intent.getParcelableExtra("tarefa", Tarefa::class.java)
         } else {
@@ -38,7 +36,7 @@ class CadastroActivity : AppCompatActivity() {
         tarefa?.let {
             binding.etTitulo.setText(it.titulo)
             binding.etDescricao.setText(it.descricao)
-            binding.etDataLimite.setText(it.dataLimite.toString())
+            binding.etDataLimite.setText(it.dataLimite.format(DateTimeFormatter.ISO_LOCAL_DATE))
             dataSelecionada = it.dataLimite
         }
 
@@ -65,9 +63,7 @@ class CadastroActivity : AppCompatActivity() {
 
             val datePicker = DatePickerDialog(this, { _, year, month, dayOfMonth ->
                 dataSelecionada = LocalDate.of(year, month + 1, dayOfMonth)
-                binding.etDataLimite.setText(
-                    dataSelecionada?.format(DateTimeFormatter.ISO_LOCAL_DATE)
-                )
+                binding.etDataLimite.setText(dataSelecionada?.format(DateTimeFormatter.ISO_LOCAL_DATE))
             }, ano, mes, dia)
 
             datePicker.show()
@@ -75,7 +71,7 @@ class CadastroActivity : AppCompatActivity() {
     }
 
     /**
-     * Cria e retorna uma Tarefa com os dados preenchidos.
+     * Salva ou atualiza a Tarefa no banco.
      */
     private fun salvarTarefa() {
         val titulo = binding.etTitulo.text.toString()
@@ -83,7 +79,7 @@ class CadastroActivity : AppCompatActivity() {
         val dataLimite = dataSelecionada ?: LocalDate.now()
 
         val novaTarefa = Tarefa(
-            id = tarefa?.id ?: 0,  // se for edição, mantém o ID
+            id = tarefa?.id ?: 0, // se for edição, mantém ID
             titulo = titulo,
             descricao = descricao,
             dataLimite = dataLimite

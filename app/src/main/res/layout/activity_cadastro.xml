@@ -10,11 +10,9 @@
     <EditText
         android:id="@+id/etTitulo"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:minHeight="48dp"
+        android:layout_height="48dp"
         android:hint="@string/titulo"
-        android:inputType="text"
-        android:autofillHints="name"
+        android:inputType="textCapSentences"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
@@ -22,11 +20,10 @@
     <EditText
         android:id="@+id/etDescricao"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:minHeight="48dp"
+        android:layout_height="48dp"
         android:hint="@string/descricao"
         android:inputType="textMultiLine"
-        android:autofillHints="name"
+        android:minLines="3"
         app:layout_constraintTop_toBottomOf="@id/etTitulo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -35,11 +32,10 @@
     <EditText
         android:id="@+id/etDataLimite"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:minHeight="48dp"
+        android:layout_height="48dp"
         android:hint="@string/data_limite"
-        android:inputType="none"
         android:focusable="false"
+        android:inputType="date"
         app:layout_constraintTop_toBottomOf="@id/etDescricao"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -48,7 +44,7 @@
     <Button
         android:id="@+id/btnSalvar"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:text="@string/salvar"
         app:layout_constraintTop_toBottomOf="@id/etDataLimite"
         app:layout_constraintStart_toStartOf="parent"
@@ -58,10 +54,11 @@
     <Button
         android:id="@+id/btnCancelar"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:text="@string/cancelar"
         app:layout_constraintTop_toBottomOf="@id/btnSalvar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="8dp"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
