@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.personaltasks.R
 import com.example.personaltasks.model.Tarefa
@@ -22,8 +23,10 @@ class TarefaViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
  */
 class TarefaAdapter(
     var tarefas: List<Tarefa>,
-    private val onItemLongClick: (Int) -> Unit  // ← função lambda para clique longo
+    private val onItemLongClick: (Int) -> Unit  // função lambda para clique longo
 ) : RecyclerView.Adapter<TarefaViewHolder>() {
+
+    var selectedPosition: Int = -1  // armazena a posição do item selecionado
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TarefaViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -37,10 +40,15 @@ class TarefaAdapter(
         holder.tvDescricao.text = tarefa.descricao
         holder.tvDataLimite.text = tarefa.dataLimite.toString()
 
-        // Adiciona o clique longo
+        // Clique longo → aciona callback e registra ContextMenu
         holder.itemView.setOnLongClickListener {
-            onItemLongClick(position)  // chama a lambda passando a posição
-            false  // importante para permitir abrir o ContextMenu
+            onItemLongClick(position)
+            selectedPosition = position
+            false  // importante: permite o ContextMenu ser exibido
+        }
+
+        holder.itemView.setOnCreateContextMenuListener { menu, v, menuInfo ->
+            (v.context as? AppCompatActivity)?.menuInflater?.inflate(R.menu.menu_contexto, menu)
         }
     }
 
