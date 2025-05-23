@@ -1,6 +1,7 @@
 package com.example.personaltasks.controller
 
 import android.os.Bundle
+import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -38,6 +39,11 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         carregarTarefas()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return true
     }
 
 }
