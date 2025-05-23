@@ -16,10 +16,19 @@ class CadastroActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCadastroBinding
     private var dataSelecionada: LocalDate? = null
     private lateinit var repository: TarefaRepository
+    private var tarefa: Tarefa? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         repository = TarefaRepository(this)
+        tarefa = intent.getParcelableExtra("tarefa")
+
+        tarefa?.let {
+            binding.etTitulo.setText(it.titulo)
+            binding.etDescricao.setText(it.descricao)
+            binding.etDataLimite.setText(it.dataLimite.toString())
+            dataSelecionada = it.dataLimite
+        }
 
         // Inicializa o ViewBinding
         binding = ActivityCadastroBinding.inflate(layoutInflater)
@@ -65,15 +74,21 @@ class CadastroActivity : AppCompatActivity() {
         val descricao = binding.etDescricao.text.toString()
         val dataLimite = dataSelecionada ?: LocalDate.now()
 
-        val tarefa = Tarefa(
+        val novaTarefa = Tarefa(
+            id = tarefa?.id ?: 0,  // importante: se for edição, mantém o ID
             titulo = titulo,
             descricao = descricao,
             dataLimite = dataLimite
         )
 
         lifecycleScope.launch {
-            repository.insert(tarefa)
+            if (tarefa == null) {
+                repository.insert(novaTarefa)
+            } else {
+                repository.update(novaTarefa)
+            }
             finish()
         }
     }
+
 }
