@@ -20,11 +20,14 @@ class CadastroActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        repository = TarefaRepository(this)
 
+        // Inicializa ViewBinding primeiro!
         binding = ActivityCadastroBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        repository = TarefaRepository(this)
+
+        // Recupera Tarefa se vier da edição
         tarefa = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
             intent.getParcelableExtra("tarefa", Tarefa::class.java)
         } else {
@@ -80,7 +83,7 @@ class CadastroActivity : AppCompatActivity() {
         val dataLimite = dataSelecionada ?: LocalDate.now()
 
         val novaTarefa = Tarefa(
-            id = tarefa?.id ?: 0,  // importante: se for edição, mantém o ID
+            id = tarefa?.id ?: 0,  // se for edição, mantém o ID
             titulo = titulo,
             descricao = descricao,
             dataLimite = dataLimite
@@ -95,5 +98,4 @@ class CadastroActivity : AppCompatActivity() {
             finish()
         }
     }
-
 }
