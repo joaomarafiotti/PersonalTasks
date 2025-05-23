@@ -6,6 +6,7 @@ import android.view.ContextMenu
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -75,17 +76,25 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onContextItemSelected(item: MenuItem): Boolean {
+        val tarefa = adapter.tarefas[selectedPosition]
+
         return when (item.itemId) {
             R.id.action_editar -> {
-                // TODO: implementar lógica de editar
+                val intent = Intent(this, CadastroActivity::class.java)
+                intent.putExtra("tarefa", tarefa)
+                startActivity(intent)
                 true
             }
             R.id.action_excluir -> {
-                // TODO: implementar lógica de excluir
+                lifecycleScope.launch {
+                    repository.delete(tarefa)
+                    carregarTarefas()
+                }
                 true
             }
             R.id.action_detalhes -> {
-                // TODO: implementar lógica de detalhes
+                val mensagem = "Título: ${tarefa.titulo}\nDescrição: ${tarefa.descricao}\nData: ${tarefa.dataLimite}"
+                Toast.makeText(this, mensagem, Toast.LENGTH_LONG).show()
                 true
             }
             else -> super.onContextItemSelected(item)
