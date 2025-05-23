@@ -21,7 +21,7 @@ class TarefaViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
  * Adapter para exibir a lista de Tarefas no RecyclerView.
  */
 class TarefaAdapter(
-    private val tarefas: List<Tarefa>
+    var tarefas: List<Tarefa>
 ) : RecyclerView.Adapter<TarefaViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TarefaViewHolder {
@@ -38,4 +38,10 @@ class TarefaAdapter(
     }
 
     override fun getItemCount(): Int = tarefas.size
+
+    fun atualizarLista(novasTarefas: List<Tarefa>) {
+        tarefas = novasTarefas
+        notifyDataSetChanged()
+    }
+
 }
