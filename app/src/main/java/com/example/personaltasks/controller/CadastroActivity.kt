@@ -21,7 +21,13 @@ class CadastroActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         repository = TarefaRepository(this)
-        tarefa = intent.getParcelableExtra("tarefa")
+
+        tarefa = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+            intent.getParcelableExtra("tarefa", Tarefa::class.java)
+        } else {
+            @Suppress("DEPRECATION")
+            intent.getParcelableExtra("tarefa")
+        }
 
         tarefa?.let {
             binding.etTitulo.setText(it.titulo)
