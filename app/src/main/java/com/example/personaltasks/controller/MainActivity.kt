@@ -55,11 +55,7 @@ class MainActivity : AppCompatActivity() {
             val tarefas = repository.getAll()
             adapter.atualizarLista(tarefas)
 
-            if (tarefas.isEmpty()) {
-                mensagemVazio.visibility = View.VISIBLE
-            } else {
-                mensagemVazio.visibility = View.GONE
-            }
+            mensagemVazio.visibility = if (tarefas.isEmpty()) View.VISIBLE else View.GONE
         }
     }
 
