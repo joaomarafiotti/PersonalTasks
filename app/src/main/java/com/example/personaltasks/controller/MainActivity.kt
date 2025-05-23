@@ -6,6 +6,7 @@ import android.view.ContextMenu
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -22,10 +23,13 @@ class MainActivity : AppCompatActivity() {
     private lateinit var adapter: TarefaAdapter
     private lateinit var repository: TarefaRepository
     private var selectedPosition: Int = -1
+    private lateinit var mensagemVazio: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        mensagemVazio = findViewById(R.id.tvMensagemVazio)
 
         recyclerView = findViewById(R.id.rvTarefas)
         adapter = TarefaAdapter(listOf()) { pos ->
@@ -44,6 +48,7 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launch {
             val tarefas = repository.getAll()
             adapter.atualizarLista(tarefas)
+            mensagemVazio.visibility = if (tarefas.isEmpty()) View.VISIBLE else View.GONE
         }
     }
 
