@@ -21,9 +21,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         recyclerView = findViewById(R.id.rvTarefas)
-        adapter = TarefaAdapter(carregarTarefas())
+        adapter = TarefaAdapter(listOf())  // inicialmente lista vazia
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this)
+        carregarTarefas()  // depois carrega as tarefas reais
         repository = TarefaRepository(this)
     }
 
