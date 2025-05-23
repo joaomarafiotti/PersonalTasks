@@ -7,12 +7,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.personaltasks.R
 import com.example.personaltasks.adapter.TarefaAdapter
 import com.example.personaltasks.model.Tarefa
+import com.example.personaltasks.repository.TarefaRepository
 import java.time.LocalDate
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: TarefaAdapter
+    private lateinit var repository: TarefaRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,6 +24,7 @@ class MainActivity : AppCompatActivity() {
         adapter = TarefaAdapter(carregarTarefas())
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this)
+        repository = TarefaRepository(this)
     }
 
     private fun carregarTarefas(): List<Tarefa> {
