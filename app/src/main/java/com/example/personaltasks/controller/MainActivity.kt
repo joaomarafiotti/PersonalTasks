@@ -67,4 +67,21 @@ class MainActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.menu_contexto, menu)
     }
 
+    override fun onContextItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_editar -> {
+                // TODO: implementar lógica de editar
+                true
+            }
+            R.id.action_excluir -> {
+                // TODO: implementar lógica de excluir
+                true
+            }
+            R.id.action_detalhes -> {
+                // TODO: implementar lógica de detalhes
+                true
+            }
+            else -> super.onContextItemSelected(item)
+        }
+    }
 }
