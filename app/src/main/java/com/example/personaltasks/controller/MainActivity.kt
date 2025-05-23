@@ -33,13 +33,11 @@ class MainActivity : AppCompatActivity() {
         }
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this)
-        carregarTarefas()  // depois carrega as tarefas reais
-        repository = TarefaRepository(this)
-        registerForContextMenu(recyclerView)
 
-        recyclerView.setOnLongClickListener {
-            false
-        }
+        repository = TarefaRepository(this)
+        carregarTarefas()  // depois carrega as tarefas reais
+
+        registerForContextMenu(recyclerView)
     }
 
     private fun carregarTarefas() {
