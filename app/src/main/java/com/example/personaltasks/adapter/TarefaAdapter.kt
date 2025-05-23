@@ -21,7 +21,8 @@ class TarefaViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
  * Adapter para exibir a lista de Tarefas no RecyclerView.
  */
 class TarefaAdapter(
-    var tarefas: List<Tarefa>
+    var tarefas: List<Tarefa>,
+    private val onItemLongClick: (Int) -> Unit  // ← função lambda para clique longo
 ) : RecyclerView.Adapter<TarefaViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TarefaViewHolder {
@@ -35,6 +36,12 @@ class TarefaAdapter(
         holder.tvTitulo.text = tarefa.titulo
         holder.tvDescricao.text = tarefa.descricao
         holder.tvDataLimite.text = tarefa.dataLimite.toString()
+
+        // Adiciona o clique longo
+        holder.itemView.setOnLongClickListener {
+            onItemLongClick(position)  // chama a lambda passando a posição
+            false  // importante para permitir abrir o ContextMenu
+        }
     }
 
     override fun getItemCount(): Int = tarefas.size
@@ -43,5 +50,4 @@ class TarefaAdapter(
         tarefas = novasTarefas
         notifyDataSetChanged()
     }
-
 }

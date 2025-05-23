@@ -20,18 +20,25 @@ class MainActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: TarefaAdapter
     private lateinit var repository: TarefaRepository
+    private var selectedPosition: Int = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         recyclerView = findViewById(R.id.rvTarefas)
-        adapter = TarefaAdapter(listOf())  // inicialmente lista vazia
+        adapter = TarefaAdapter(listOf()) { pos ->
+            selectedPosition = pos
+        }
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this)
         carregarTarefas()  // depois carrega as tarefas reais
         repository = TarefaRepository(this)
         registerForContextMenu(recyclerView)
+
+        recyclerView.setOnLongClickListener {
+            false
+        }
     }
 
     private fun carregarTarefas() {
