@@ -77,7 +77,7 @@ O foco deste projeto é aplicar os conceitos de **desenvolvimento para Android**
 
 ## 🎥 **Vídeo de execução**
 
-[**Clique aqui para assistir ao vídeo de execução**](ainda nao postado)  
+[**Clique aqui para assistir ao vídeo**](video-demo.mp4)
 > O vídeo demonstra as principais funcionalidades do app: cadastro, listagem, edição, exclusão e visualização de detalhes.
 
 ---
