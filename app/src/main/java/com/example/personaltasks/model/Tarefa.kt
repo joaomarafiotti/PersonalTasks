@@ -8,10 +8,10 @@ import java.time.LocalDate
 
 /**
  * Entidade que representa uma Tarefa no banco de dados.
- * @Entity define que essa classe sera uma tabela.
- * @Parcelize permite que possamos enviar a Tarefa entre Activities.
+ *
+ * @Entity define que essa classe será convertida em uma tabela no Room.
+ * @Parcelize permite passar objetos Tarefa entre Activities através de Intents.
  */
-
 @Parcelize
 @Entity(tableName = "tarefas")
 data class Tarefa(
@@ -21,5 +21,4 @@ data class Tarefa(
     val titulo: String,
     val descricao: String,
     val dataLimite: LocalDate
-
 ) : Parcelable
