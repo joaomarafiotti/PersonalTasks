@@ -53,6 +53,7 @@ class CadastroActivity : AppCompatActivity() {
             binding.etTitulo.setText(it.titulo)
             binding.etDescricao.setText(it.descricao)
             binding.etDataLimite.setText(it.dataLimite.format(DateTimeFormatter.ISO_LOCAL_DATE))
+            binding.cbCumprida.isChecked = it.cumprida
             dataSelecionada = it.dataLimite
         }
 
@@ -104,7 +105,8 @@ class CadastroActivity : AppCompatActivity() {
             id = tarefa?.id ?: 0,
             titulo = titulo,
             descricao = descricao,
-            dataLimite = dataLimite
+            dataLimite = dataLimite,
+            cumprida = binding.cbCumprida.isChecked
         )
 
         // Executa operação no banco usando coroutines
