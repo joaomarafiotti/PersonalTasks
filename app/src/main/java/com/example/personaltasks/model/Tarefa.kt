@@ -1,26 +1,23 @@
 package com.example.personaltasks.model
 
 import android.os.Parcelable
-import androidx.room.Entity
-import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
 import java.time.LocalDate
 
 /**
- * Entidade que representa uma Tarefa no banco de dados.
- *
- * @Entity define que essa classe será convertida em uma tabela no Room.
- * @Parcelize permite passar objetos Tarefa entre Activities através de Intents.
+ * Modelo de dados usado tanto localmente quanto remotamente.
+ * No Firebase, os campos 'id' e 'excluida' são essenciais para manipulação e histórico.
  */
 @Parcelize
-@Entity(tableName = "tarefas")
 data class Tarefa(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int = 0, // ID autogerado pelo Room
+    var id: String = "",    // Firebase usa String como chave
+    var titulo: String = "",
+    var descricao: String = "",
+    var dataLimite: LocalDate = LocalDate.now(),
+    var cumprida: Boolean = false,
+    var excluida: Boolean = false   // Marca se a tarefa foi "excluída"
+) : Parcelable {
 
-    val titulo: String,
-    val descricao: String,
-    val dataLimite: LocalDate,
-    val cumprida: Boolean = false
-) : Parcelable
-
+    // Firebase exige construtor sem argumentos
+    constructor() : this("", "", "", LocalDate.now(), false, false)
+}
