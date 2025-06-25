@@ -28,6 +28,7 @@ class LoginActivity : AppCompatActivity() {
             abrirTelaPrincipal()
         }
 
+        // Ação de login
         binding.btnLogin.setOnClickListener {
             val email = binding.etEmail.text.toString().trim()
             val senha = binding.etSenha.text.toString().trim()
@@ -45,6 +46,7 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
+        // Ação de registro
         binding.btnRegistrar.setOnClickListener {
             val email = binding.etEmail.text.toString().trim()
             val senha = binding.etSenha.text.toString().trim()
@@ -63,6 +65,9 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Redireciona o usuário para a tela principal do app.
+     */
     private fun abrirTelaPrincipal() {
         startActivity(Intent(this, MainActivity::class.java))
         finish()
