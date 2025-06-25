@@ -20,5 +20,7 @@ data class Tarefa(
 
     val titulo: String,
     val descricao: String,
-    val dataLimite: LocalDate
+    val dataLimite: LocalDate,
+    val cumprida: Boolean = false
 ) : Parcelable
+

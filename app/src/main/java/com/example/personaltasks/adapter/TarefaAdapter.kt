@@ -16,6 +16,7 @@ class TarefaViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val tvTitulo: TextView = itemView.findViewById(R.id.tvTitulo)
     val tvDescricao: TextView = itemView.findViewById(R.id.tvDescricao)
     val tvDataLimite: TextView = itemView.findViewById(R.id.tvDataLimite)
+    val tvStatus: TextView = itemView.findViewById(R.id.tvStatus)
 }
 
 /**
@@ -43,11 +44,13 @@ class TarefaAdapter(
      */
     override fun onBindViewHolder(holder: TarefaViewHolder, position: Int) {
         val tarefa = tarefas[position]
+        val status = if (tarefa.cumprida) "Cumprida" else "Pendente"
 
         // Atualiza as TextViews com os dados da Tarefa
         holder.tvTitulo.text = tarefa.titulo
         holder.tvDescricao.text = tarefa.descricao
         holder.tvDataLimite.text = tarefa.dataLimite.toString()
+        holder.tvStatus.text = "Status: $status"
 
         // Define o clique longo, chamando a função passada por parâmetro
         holder.itemView.setOnLongClickListener {

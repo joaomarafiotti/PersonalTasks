@@ -24,7 +24,7 @@ import kotlinx.coroutines.launch
  */
 class MainActivity : AppCompatActivity() {
 
-    // Toolbar que exibe o título e o menu de opções
+    // Toolbar que exibe o título e o menu de opções (ignore esse comentario, somente para teste)
     private lateinit var toolbar: Toolbar
 
     // Mensagem exibida quando a lista de tarefas está vazia

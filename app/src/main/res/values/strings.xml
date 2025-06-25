@@ -17,4 +17,5 @@
     <string name="nova_tarefa">Nova Tarefa</string>
 
     <string name="nenhuma_tarefa_cadastrada">Nenhuma tarefa cadastrada.</string>
+    <string name="tarefa_cumprida">Tarefa Cumprida</string>
 </resources>
