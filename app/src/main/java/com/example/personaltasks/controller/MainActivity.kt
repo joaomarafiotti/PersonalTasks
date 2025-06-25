@@ -10,14 +10,13 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.personaltasks.R
 import com.example.personaltasks.adapter.TarefaAdapter
 import com.example.personaltasks.helper.FirebaseAuthHelper
-import com.example.personaltasks.repository.TarefaRepository
-import kotlinx.coroutines.launch
+import com.example.personaltasks.model.Tarefa
+import com.example.personaltasks.repository.TarefaRemoteRepository
 
 /**
  * Activity principal que exibe a lista de Tarefas cadastradas.
@@ -29,7 +28,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mensagemVazio: TextView
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: TarefaAdapter
-    private lateinit var repository: TarefaRepository
+    private lateinit var repository: TarefaRemoteRepository
     private var selectedPosition: Int = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,18 +54,18 @@ class MainActivity : AppCompatActivity() {
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        repository = TarefaRepository(this)
+        repository = TarefaRemoteRepository()
 
         carregarTarefas()
         registerForContextMenu(recyclerView)
     }
 
     private fun carregarTarefas() {
-        lifecycleScope.launch {
-            val tarefas = repository.getAll()
-            adapter.atualizarLista(tarefas)
-
-            mensagemVazio.visibility = if (tarefas.isEmpty()) View.VISIBLE else View.GONE
+        repository.getAll { tarefas ->
+            runOnUiThread {
+                adapter.atualizarLista(tarefas)
+                mensagemVazio.visibility = if (tarefas.isEmpty()) View.VISIBLE else View.GONE
+            }
         }
     }
 
@@ -110,10 +109,8 @@ class MainActivity : AppCompatActivity() {
                 true
             }
             R.id.action_excluir -> {
-                lifecycleScope.launch {
-                    repository.delete(tarefa)
-                    carregarTarefas()
-                }
+                repository.delete(tarefa)
+                carregarTarefas()
                 true
             }
             R.id.action_detalhes -> {
