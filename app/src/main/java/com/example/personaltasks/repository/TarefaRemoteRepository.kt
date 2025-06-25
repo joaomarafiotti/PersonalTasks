@@ -1,5 +1,6 @@
 package com.example.personaltasks.repository
 
+import com.example.personaltasks.helper.TarefaFirebaseMapper
 import com.example.personaltasks.model.Tarefa
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -19,11 +20,10 @@ class TarefaRemoteRepository {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val tarefas = mutableListOf<Tarefa>()
                     for (child in snapshot.children) {
-                        val tarefa = child.getValue(Tarefa::class.java)
-                        tarefa?.let {
-                            it.id = child.key!! // garante o ID
-                            tarefas.add(it)
-                        }
+                        val map = child.value as? Map<String, Any?> ?: continue
+                        val tarefa = TarefaFirebaseMapper.fromMap(map)
+                        tarefa.id = child.key!!
+                        tarefas.add(tarefa)
                     }
                     callback(tarefas)
                 }
@@ -40,11 +40,10 @@ class TarefaRemoteRepository {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val tarefas = mutableListOf<Tarefa>()
                     for (child in snapshot.children) {
-                        val tarefa = child.getValue(Tarefa::class.java)
-                        tarefa?.let {
-                            it.id = child.key!!
-                            tarefas.add(it)
-                        }
+                        val map = child.value as? Map<String, Any?> ?: continue
+                        val tarefa = TarefaFirebaseMapper.fromMap(map)
+                        tarefa.id = child.key!!
+                        tarefas.add(tarefa)
                     }
                     callback(tarefas)
                 }
@@ -58,19 +57,22 @@ class TarefaRemoteRepository {
     fun insert(tarefa: Tarefa) {
         val novaRef = database.push()
         tarefa.id = novaRef.key!!
-        novaRef.setValue(tarefa)
+        val map = TarefaFirebaseMapper.toMap(tarefa)
+        novaRef.setValue(map)
     }
 
     fun update(tarefa: Tarefa) {
         if (tarefa.id.isNotEmpty()) {
-            database.child(tarefa.id).setValue(tarefa)
+            val map = TarefaFirebaseMapper.toMap(tarefa)
+            database.child(tarefa.id).setValue(map)
         }
     }
 
     fun delete(tarefa: Tarefa) {
         if (tarefa.id.isNotEmpty()) {
             tarefa.excluida = true
-            database.child(tarefa.id).setValue(tarefa)
+            val map = TarefaFirebaseMapper.toMap(tarefa)
+            database.child(tarefa.id).setValue(map)
         }
     }
 }
