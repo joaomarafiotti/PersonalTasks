@@ -14,24 +14,22 @@ class TarefaRemoteRepository {
             .child(auth.currentUser?.uid ?: "anonimo")
             .child("tarefas")
 
-    fun getAll(callback: (List<Tarefa>) -> Unit) {
-        database.orderByChild("excluida").equalTo(false)
-            .addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    val tarefas = mutableListOf<Tarefa>()
-                    for (child in snapshot.children) {
-                        val map = child.value as? Map<String, Any?> ?: continue
-                        val tarefa = TarefaFirebaseMapper.fromMap(map)
-                        tarefa.id = child.key!!
-                        tarefas.add(tarefa)
-                    }
-                    callback(tarefas)
+    fun observeAll(callback: (List<Tarefa>) -> Unit) {
+        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
+        database.child("tarefas").child(userId).addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val tarefas = mutableListOf<Tarefa>()
+                snapshot.children.forEach { tarefaSnapshot ->
+                    val tarefa = tarefaSnapshot.getValue(Tarefa::class.java)
+                    tarefa?.let { tarefas.add(it) }
                 }
+                callback(tarefas)
+            }
 
-                override fun onCancelled(error: DatabaseError) {
-                    callback(emptyList())
-                }
-            })
+            override fun onCancelled(error: DatabaseError) {
+                // Você pode tratar erros aqui, se quiser.
+            }
+        })
     }
 
     fun getExcluidas(callback: (List<Tarefa>) -> Unit) {

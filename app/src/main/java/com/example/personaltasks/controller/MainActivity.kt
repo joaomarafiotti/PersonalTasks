@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun carregarTarefas() {
-        repository.getAll { tarefas ->
+        repository.observeAll { tarefas ->
             runOnUiThread {
                 adapter.atualizarLista(tarefas)
                 mensagemVazio.visibility = if (tarefas.isEmpty()) View.VISIBLE else View.GONE
