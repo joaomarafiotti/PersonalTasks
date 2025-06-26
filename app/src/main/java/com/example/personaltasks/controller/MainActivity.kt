@@ -16,7 +16,6 @@ import com.example.personaltasks.R
 import com.example.personaltasks.adapter.TarefaAdapter
 import com.example.personaltasks.helper.FirebaseAuthHelper
 import com.example.personaltasks.model.Tarefa
-import com.example.personaltasks.repository.TarefaRemoteRepository
 
 /**
  * Activity principal que exibe a lista de Tarefas cadastradas.
@@ -28,7 +27,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mensagemVazio: TextView
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: TarefaAdapter
-    private lateinit var repository: TarefaRemoteRepository
+    private lateinit var controller: MainController
     private var selectedPosition: Int = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,24 +53,20 @@ class MainActivity : AppCompatActivity() {
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        repository = TarefaRemoteRepository()
-
-        carregarTarefas()
-        registerForContextMenu(recyclerView)
-    }
-
-    private fun carregarTarefas() {
-        repository.observeAll { tarefas ->
+        controller = MainController { tarefas ->
             runOnUiThread {
                 adapter.atualizarLista(tarefas)
                 mensagemVazio.visibility = if (tarefas.isEmpty()) View.VISIBLE else View.GONE
             }
         }
+
+        controller.carregarTarefas()
+        registerForContextMenu(recyclerView)
     }
 
     override fun onResume() {
         super.onResume()
-        carregarTarefas()
+        controller.carregarTarefas()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -119,8 +114,8 @@ class MainActivity : AppCompatActivity() {
                 true
             }
             R.id.action_excluir -> {
-                repository.delete(tarefa)
-                carregarTarefas()
+                controller.excluirTarefa(tarefa)
+                controller.carregarTarefas()
                 true
             }
             R.id.action_detalhes -> {
