@@ -85,6 +85,10 @@ class MainActivity : AppCompatActivity() {
                 startActivity(Intent(this, CadastroActivity::class.java))
                 true
             }
+            R.id.action_tarefas_excluidas -> {
+                startActivity(Intent(this, TarefasExcluidasActivity::class.java))
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
