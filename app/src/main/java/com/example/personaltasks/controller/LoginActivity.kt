@@ -6,10 +6,11 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.personaltasks.databinding.ActivityLoginBinding
 import com.example.personaltasks.helper.FirebaseAuthHelper
+import com.google.firebase.auth.FirebaseAuth
 
 /**
  * Tela de autenticação de usuário.
- * Permite login e registro com e-mail e senha via FirebaseAuth.
+ * Permite login, registro e recuperação de senha com e-mail e senha via FirebaseAuth.
  */
 class LoginActivity : AppCompatActivity() {
 
@@ -61,6 +62,23 @@ class LoginActivity : AppCompatActivity() {
                 }
             } else {
                 Toast.makeText(this, "Preencha todos os campos", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        // Ação de recuperação de senha
+        binding.resetPasswordBt.setOnClickListener {
+            val email = binding.etEmail.text.toString().trim()
+
+            if (email.isNotEmpty()) {
+                FirebaseAuth.getInstance().sendPasswordResetEmail(email)
+                    .addOnSuccessListener {
+                        Toast.makeText(this, "Email de redefinição enviado.", Toast.LENGTH_SHORT).show()
+                    }
+                    .addOnFailureListener {
+                        Toast.makeText(this, "Erro: ${it.message}", Toast.LENGTH_SHORT).show()
+                    }
+            } else {
+                Toast.makeText(this, "Digite seu email para redefinir a senha.", Toast.LENGTH_SHORT).show()
             }
         }
     }
