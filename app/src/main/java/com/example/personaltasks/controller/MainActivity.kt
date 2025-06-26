@@ -86,7 +86,7 @@ class MainActivity : AppCompatActivity() {
                 true
             }
             R.id.action_tarefas_excluidas -> {
-                startActivity(Intent(this, TarefasExcluidasActivity::class.java))
+                startActivity(Intent(this, ExcludedTasksActivity::class.java))
                 true
             }
             else -> super.onOptionsItemSelected(item)
