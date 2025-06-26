@@ -89,6 +89,12 @@ class MainActivity : AppCompatActivity() {
                 startActivity(Intent(this, ExcludedTasksActivity::class.java))
                 true
             }
+            R.id.action_logout -> {
+                FirebaseAuthHelper().signOut()
+                startActivity(Intent(this, LoginActivity::class.java))
+                finish()
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }

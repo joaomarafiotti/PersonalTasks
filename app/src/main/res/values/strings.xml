@@ -25,4 +25,5 @@
     <string name="nenhuma_tarefa_exclu_da">Nenhuma tarefa excluída</string>
     <string name="reativar_tarefa">Reativar tarefa</string>
     <string name="tarefas_exclu_das">Tarefas Excluídas</string>
+    <string name="logout">Logout</string>
 </resources>

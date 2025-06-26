@@ -46,7 +46,7 @@ class FirebaseAuthHelper {
     /**
      * Realiza logout do Firebase.
      */
-    fun logout() {
-        auth.signOut()
+    fun signOut() {
+        FirebaseAuth.getInstance().signOut()
     }
 }
