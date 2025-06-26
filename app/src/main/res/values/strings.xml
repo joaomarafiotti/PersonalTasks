@@ -22,4 +22,6 @@
     <string name="senha">Senha</string>
     <string name="entrar">Entrar</string>
     <string name="registrar">Registrar</string>
+    <string name="nenhuma_tarefa_exclu_da">Nenhuma tarefa excluída</string>
+    <string name="reativar_tarefa">Reativar tarefa</string>
 </resources>
