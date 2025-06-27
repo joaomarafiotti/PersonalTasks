@@ -6,21 +6,17 @@ import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
 import java.time.LocalDate
 
-/**
- * Entidade que representa uma Tarefa no banco de dados.
- *
- * @Entity define que essa classe será convertida em uma tabela no Room.
- * @Parcelize permite passar objetos Tarefa entre Activities através de Intents.
- */
-@Parcelize
 @Entity(tableName = "tarefas")
+@Parcelize
 data class Tarefa(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int = 0, // ID autogerado pelo Room
+    @PrimaryKey
+    var id: String = "",
+    var titulo: String = "",
+    var descricao: String = "",
+    var dataLimite: LocalDate = LocalDate.now(),
+    var cumprida: Boolean = false,
+    var excluida: Boolean = false
+) : Parcelable {
 
-    val titulo: String,
-    val descricao: String,
-    val dataLimite: LocalDate,
-    val cumprida: Boolean = false
-) : Parcelable
-
+    constructor() : this("", "", "", LocalDate.now(), false, false)
+}

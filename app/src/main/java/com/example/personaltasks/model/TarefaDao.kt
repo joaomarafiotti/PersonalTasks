@@ -38,5 +38,11 @@ interface TarefaDao {
      * Busca uma Tarefa específica pelo ID.
      */
     @Query("SELECT * FROM tarefas WHERE id = :id")
-    suspend fun getById(id: Int): Tarefa
+    suspend fun getById(id: String): Tarefa
+
+    @Query("SELECT * FROM tarefas WHERE excluida = 0 ORDER BY dataLimite ASC")
+    suspend fun getAtivas(): List<Tarefa>
+
+    @Query("SELECT * FROM tarefas WHERE excluida = 1 ORDER BY dataLimite ASC")
+    suspend fun getExcluidas(): List<Tarefa>
 }
