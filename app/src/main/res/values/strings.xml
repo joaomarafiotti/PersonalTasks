@@ -1,19 +1,16 @@
 <resources>
     <string name="app_name">PersonalTasks</string>
 
-    <!-- Activity Cadastro -->
     <string name="titulo">Título</string>
     <string name="descricao">Descrição</string>
     <string name="data_limite">Data Limite</string>
     <string name="salvar">Salvar</string>
     <string name="cancelar">Cancelar</string>
 
-    <!-- Item Tarefa -->
     <string name="detalhes">Detalhes</string>
     <string name="editar">Editar</string>
     <string name="excluir">Excluir</string>
 
-    <!-- Menu Principal -->
     <string name="nova_tarefa">Nova Tarefa</string>
 
     <string name="nenhuma_tarefa_cadastrada">Nenhuma tarefa cadastrada.</string>
@@ -26,4 +23,11 @@
     <string name="reativar_tarefa">Reativar tarefa</string>
     <string name="tarefas_exclu_das">Tarefas Excluídas</string>
     <string name="logout">Logout</string>
+
+    <string-array name="opcoes_prioridade">
+        <item>Alta</item>
+        <item>Média</item>
+        <item>Baixa</item>
+    </string-array>
+
 </resources>

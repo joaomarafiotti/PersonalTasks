@@ -2,7 +2,9 @@ package com.example.personaltasks.controller
 
 import android.app.DatePickerDialog
 import android.os.Bundle
+import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
+import com.example.personaltasks.R
 import com.example.personaltasks.databinding.ActivityCadastroBinding
 import com.example.personaltasks.model.Tarefa
 import com.example.personaltasks.repository.TarefaRemoteRepository
@@ -26,12 +28,16 @@ class CadastroActivity : AppCompatActivity() {
         binding = ActivityCadastroBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val opcoes = resources.getStringArray(R.array.opcoes_prioridade)
+        val adapterPrioridade = ArrayAdapter(this, android.R.layout.simple_spinner_item, opcoes)
+        adapterPrioridade.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.spinnerPrioridade.adapter = adapterPrioridade
+
         tarefa = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
             intent.getParcelableExtra("tarefa", Tarefa::class.java)
         } else {
             @Suppress("DEPRECATION")
             intent.getParcelableExtra("tarefa")
-            // push test
         }
 
         tarefa?.let {
@@ -40,6 +46,9 @@ class CadastroActivity : AppCompatActivity() {
             binding.etDataLimite.setText(it.dataLimite.format(DateTimeFormatter.ISO_LOCAL_DATE))
             binding.cbCumprida.isChecked = it.cumprida
             dataSelecionada = it.dataLimite
+
+            val index = opcoes.indexOf(it.prioridade)
+            if (index >= 0) binding.spinnerPrioridade.setSelection(index)
         }
 
         configurarDatePicker()
@@ -73,6 +82,7 @@ class CadastroActivity : AppCompatActivity() {
         val titulo = binding.etTitulo.text.toString()
         val descricao = binding.etDescricao.text.toString()
         val dataLimite = dataSelecionada ?: LocalDate.now()
+        val prioridadeSelecionada = binding.spinnerPrioridade.selectedItem.toString()
 
         val novaTarefa = Tarefa(
             id = tarefa?.id ?: "",
@@ -80,7 +90,8 @@ class CadastroActivity : AppCompatActivity() {
             descricao = descricao,
             dataLimite = dataLimite,
             cumprida = binding.cbCumprida.isChecked,
-            excluida = false // garante que não será excluída
+            excluida = false,
+            prioridade = prioridadeSelecionada
         )
 
         if (tarefa == null) {
