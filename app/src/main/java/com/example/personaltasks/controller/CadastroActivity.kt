@@ -78,7 +78,8 @@ class CadastroActivity : AppCompatActivity() {
             titulo = titulo,
             descricao = descricao,
             dataLimite = dataLimite,
-            cumprida = binding.cbCumprida.isChecked
+            cumprida = binding.cbCumprida.isChecked,
+            excluida = false // garante que não será excluída
         )
 
         if (tarefa == null) {
