@@ -34,6 +34,7 @@ class ExcludedTasksActivity : AppCompatActivity() {
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
         supportActionBar?.title = "Tarefas Excluídas"
+        supportActionBar?.setDisplayHomeAsUpEnabled(true) // ← habilita botão voltar
 
         mensagemVazio = findViewById(R.id.mensagemVazio)
         recyclerView = findViewById(R.id.rvTarefasExcluidas)
@@ -81,6 +82,18 @@ class ExcludedTasksActivity : AppCompatActivity() {
                 true
             }
             else -> super.onContextItemSelected(item)
+        }
+    }
+
+    /**
+     * Trata o clique no botão de voltar (⬅)
+     */
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return if (item.itemId == android.R.id.home) {
+            finish()
+            true
+        } else {
+            super.onOptionsItemSelected(item)
         }
     }
 }
