@@ -1,23 +1,22 @@
 package com.example.personaltasks.model
 
 import android.os.Parcelable
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
 import java.time.LocalDate
 
-/**
- * Modelo de dados usado tanto localmente quanto remotamente.
- * No Firebase, os campos 'id' e 'excluida' são essenciais para manipulação e histórico.
- */
+@Entity(tableName = "tarefas")
 @Parcelize
 data class Tarefa(
-    var id: String = "",    // Firebase usa String como chave
+    @PrimaryKey
+    var id: String = "",
     var titulo: String = "",
     var descricao: String = "",
     var dataLimite: LocalDate = LocalDate.now(),
     var cumprida: Boolean = false,
-    var excluida: Boolean = false   // Marca se a tarefa foi "excluída"
+    var excluida: Boolean = false
 ) : Parcelable {
 
-    // Firebase exige construtor sem argumentos
     constructor() : this("", "", "", LocalDate.now(), false, false)
 }
