@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.personaltasks.R
 import com.example.personaltasks.adapter.TarefaAdapter
 import com.example.personaltasks.helper.FirebaseAuthHelper
-import com.example.personaltasks.model.Tarefa
 
 /**
  * Activity principal que exibe a lista de Tarefas cadastradas.
@@ -100,7 +99,7 @@ class MainActivity : AppCompatActivity() {
         menuInfo: ContextMenu.ContextMenuInfo?
     ) {
         super.onCreateContextMenu(menu, v, menuInfo)
-        menuInflater.inflate(R.menu.menu_contexto, menu)
+        menuInflater.inflate(R.menu.menu_contexto_ativas, menu)
     }
 
     override fun onContextItemSelected(item: MenuItem): Boolean {
