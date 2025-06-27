@@ -63,7 +63,7 @@ class ExcludedTasksActivity : AppCompatActivity() {
         menuInfo: ContextMenu.ContextMenuInfo?
     ) {
         super.onCreateContextMenu(menu, v, menuInfo)
-        menuInflater.inflate(R.menu.menu_contexto, menu)
+        menuInflater.inflate(R.menu.menu_contexto_excluidas, menu) //
     }
 
     override fun onContextItemSelected(item: MenuItem): Boolean {
