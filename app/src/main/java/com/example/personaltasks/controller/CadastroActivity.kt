@@ -31,6 +31,7 @@ class CadastroActivity : AppCompatActivity() {
         } else {
             @Suppress("DEPRECATION")
             intent.getParcelableExtra("tarefa")
+            // push test
         }
 
         tarefa?.let {
